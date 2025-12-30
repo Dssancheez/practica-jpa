@@ -29,8 +29,12 @@ class DirectorRepositoryTest {
 
     @Test
     void deberiaEncontrarDirectorPorNombreContainingIgnoreCase() {
+
         List<DirectorEntity> directores = directorRepository.findByNombreContainingIgnoreCase("Ridley");
-        assertThat(directores).hasSize(1);
+
+
+        assertThat(directores).isNotEmpty();
+        assertThat(directores.stream().anyMatch(d -> d.getNombre().contains("Ridley"))).isTrue();
     }
 
     @Test

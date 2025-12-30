@@ -1,37 +1,31 @@
 package es.fpsumma.dam2.videoclub.persistence.jpa.entity;
 
+
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "director")
-public class DirectorEntity {
+@Table (name = "actor")
+public class ActorEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false)
     private String nombre;
+    @ManyToMany(mappedBy = "actores")
+    private List<PeliculaEntity> peliculas = new ArrayList<>();
 
-    // Añadir relación con Lista de películas
-
-    @OneToMany(mappedBy = "director")
-   private List<PeliculaEntity> peliculas = new ArrayList<>();
-
-    // ===== Constructores =====
-    public DirectorEntity(Long id, String nombre) {
+    public ActorEntity(Long id, String nombre, List<PeliculaEntity> peliculas) {
         this.id = id;
         this.nombre = nombre;
+        this.peliculas = peliculas;
     }
 
-    public DirectorEntity() {
-    }
-
-
-    // ===== Getters y setters =====
+    public ActorEntity() {}
 
     public Long getId() {
         return id;
@@ -56,5 +50,4 @@ public class DirectorEntity {
     public void setPeliculas(List<PeliculaEntity> peliculas) {
         this.peliculas = peliculas;
     }
-
 }
